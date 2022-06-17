@@ -3,12 +3,12 @@ $CSVData = Import-CSV -Path $CSVFile -Delimiter ";" -Encoding UTF8
 
 Foreach($Utilisateur in $CSVData){
 
-    $UtilisateurPrenom = $Utilisateur.Prenom
-    $UtilisateurNom = $Utilisateur.Nom
-    $UtilisateurLogin = ($UtilisateurPrenom).Substring(0,1) + "." + $UtilisateurNom
-    $UtilisateurEmail = "$UtilisateurLogin@adrien.fr"
-    $UtilisateurMotDePasse = "Adr!en@2022"
-    $UtilisateurFonction = $Utilisateur.Fonction
+    	$UtilisateurPrenom = $Utilisateur.Prenom
+    	$UtilisateurNom = $Utilisateur.Nom
+    	$UtilisateurLogin = ($UtilisateurPrenom).Substring(0,1) + "." + $UtilisateurNom
+    	$UtilisateurEmail = "$UtilisateurLogin@adrien.fr"
+    	$UtilisateurMotDePasse = "Adr!en@2022"
+    	$UtilisateurFonction = $Utilisateur.Fonction
 	$Name = $Utilisateur.Prenom + $Utilisateur.Nom
 	$UPath = "OU=" + $UtilisateurFonction +",OU=SERVICES,DC=adrien,DC=lan" 
 	$Initial = ($UtilisateurPrenom).Substring(0,1) + ($UtilisateurNom).Substring(0,1)
@@ -22,18 +22,18 @@ Foreach($Utilisateur in $CSVData){
     else
     {
         New-ADUser	-Name $Name `
-                    -DisplayName $UtilisateurNom`
-                    -GivenName $UtilisateurPrenom `
-                    -Surname $UtilisateurNom `
-                    -SamAccountName $UtilisateurLogin `
-                    -UserPrincipalName "$UtilisateurLogin@adrien.fr" `
-                    -EmailAddress $UtilisateurEmail `
-                    -Title $UtilisateurFonction `
-					-Initials $Initial `
-                    -Path $UPath `
-                    -AccountPassword(ConvertTo-SecureString $UtilisateurMotDePasse -AsPlainText -Force) `
-                    -ChangePasswordAtLogon $true `
-                    -Enabled $true
+                    	-DisplayName $UtilisateurNom`
+                    	-GivenName $UtilisateurPrenom `
+                    	-Surname $UtilisateurNom `
+                    	-SamAccountName $UtilisateurLogin `
+                    	-UserPrincipalName "$UtilisateurLogin@adrien.fr" `
+                    	-EmailAddress $UtilisateurEmail `
+                    	-Title $UtilisateurFonction `
+			-Initials $Initial `
+                    	-Path $UPath `
+                    	-AccountPassword(ConvertTo-SecureString $UtilisateurMotDePasse -AsPlainText -Force) `
+			-ChangePasswordAtLogon $true `
+                    	-Enabled $true
         Write-Output "Creation de l'utilisateur : $UtilisateurLogin ($UtilisateurNom $UtilisateurPrenom)"
 		
 		Add-ADGroupMember -Identity $Group -Members $gPath
